@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container p-3 my-3 border">	
+	<table class="table table-striped table-hover" >
+	  <thead>
+	    <tr>
+	      <th scope="col">ID</th>
+	      <th scope="col">Title</th>
+	      <th scope="col">Source</th>
+	    </tr>
+	  </thead>
+
+	  	{% for recipe in recipes.results %}
+		  <tbody>
+		    <tr>
+		      <th scope="row">{{recipe.id}}</th>
+		      <td>{{recipe.title}}</td>
+		      <td><a href="{{recipe.sourceUrl}}">{{recipe.sourceUrl}}</a></td>
+		    </tr>
+		  </tbody>
+		{% endfor %}
+	</table><br>	
+		
+	<form method="POST" action="{% url 'get_recipe' %}">
+		{% csrf_token %}
+	  <select class="form-select" aria-label="Default select example" name="recipe">
+	  <option selected>Select A Recipe</option>
+	  
+	{% for recipe in recipes.results %}
+	  <option value="{{recipe.id}}">{{recipe.title}}</option>
+	 {% endfor %}
+
+	</select><br>
+	  <button type="submit" class="btn btn-primary">Get Recipe</button>
+	</form>
+</div>
+
+{% endblock %}

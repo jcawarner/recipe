@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container-md container-fluid"><br><br>
+	<h4 class="heading" style="text-align: center;">{{recipe_info.title}}</h4><br>
+
+
+	<p>{{recipe_info.summary|striptags}}</p><br>
+	<div class="row">
+		<div class="col-md-6">
+			<h5>Ingredients</h5><br>
+
+			{% for info in recipe_info.extendedIngredients %}
+				<ul>
+					<li>{{info.name}} : {{info.amount}} {{info.unit}}</li>
+				</ul>
+			{% endfor %}
+		</div>	
+		<div class="col-md-6">
+			<h5>Directions</h5>
+
+			{% for step in recipe_info.analyzedInstructions %}
+				{% for name in step.steps %}
+					<ul>
+						<li>{{name.number}}. {{name.step}}</li>
+					</ul>
+				{% endfor %}
+				
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+{% endblock %}
